@@ -15,7 +15,7 @@ runMongo();
 
 
 const port = new SerialPort({
-  path: '/dev/ttyACM0',   // <- change to your Arduino port
+  path: '/dev/ttyACM0',
   baudRate: 9600,
 });
 
