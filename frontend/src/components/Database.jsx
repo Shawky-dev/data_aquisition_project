@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function About() {
+function Database() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -9,4 +9,4 @@ function About() {
   );
 }
 
-export default About;
+export default Database;
