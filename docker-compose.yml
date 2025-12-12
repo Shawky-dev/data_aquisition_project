@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  node:
+    build: ./server
+    container_name: node-server
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: mongodb://mongo:27017/mydb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"   # Arduino access
+    privileged: true                  # required for serialport
+
+volumes:
+  mongo_data:

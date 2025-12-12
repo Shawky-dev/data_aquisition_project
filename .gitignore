@@ -1,0 +1,88 @@
+# ============================================
+# Node.js
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.idea/
+.vscode/
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Node build outputs
+dist/
+build/
+.cache/
+.next/
+out/
+
+# ============================================
+# Server (Node backend)
+# ============================================
+server/node_modules/
+server/npm-debug.log*
+server/dist/
+server/build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# ============================================
+# Frontend (React/Vue/Svelte/etc.)
+# ============================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.cache/
+frontend/npm-debug.log*
+
+# ============================================
+# Docker
+# ============================================
+# Local Docker data
+docker-data/
+docker-compose.override.yml
+
+# Prevent checking in volumes
+volumes/
+**/mongo_data/
+
+# ============================================
+# Arduino
+# ============================================
+*.hex
+*.elf
+*.eep
+
+# Arduino build folders
+arduino/build/
+arduino/**/build/
+
+# ============================================
+# System / OS
+# ============================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================
+# Logs and temporary files
+# ============================================
+*.swp
+*.swo
+*.tmp
+tmp/
+temp/
+
+# ============================================
+# Misc
+# ============================================
+*.lock-wscript
+*.orig
