@@ -14,17 +14,17 @@ services:
     build: ./server
     container_name: node-server
     restart: unless-stopped
-    depends_on:
-      - mongo
-    environment:
-      MONGO_URL: mongodb://mongo:27017/mydb
     ports:
-      - "3000:3000"
+      - "3000:3000"    # If your API uses this
+      - "8080:8080"    # WebSocket port
     volumes:
       - ./server:/app
     devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
-    privileged: true
+      - "/dev/ttyACM0:/dev/ttyACM0"   # <-- REQUIRED for Arduino access
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+    depends_on:
+      - mongo
 
   frontend:
     build: ./frontend

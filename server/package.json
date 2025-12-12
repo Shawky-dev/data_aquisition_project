@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "mongodb": "^7.0.0",
-    "serialport": "^13.0.0"
+    "serialport": "^13.0.0",
+    "ws": "^8.18.3"
   }
 }

@@ -1,5 +1,7 @@
+// server.js
 import { SerialPort, ReadlineParser } from 'serialport';
 import { MongoClient } from "mongodb";
+import { WebSocketServer } from "ws";
 
 const client = new MongoClient(process.env.MONGO_URL);
 
@@ -13,7 +15,7 @@ async function runMongo() {
 }
 runMongo();
 
-
+// ---- Arduino Serial Connection ----
 const port = new SerialPort({
   path: '/dev/ttyACM0',
   baudRate: 9600,
@@ -21,14 +23,26 @@ const port = new SerialPort({
 
 const parser = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
-// Listen for data from Arduino
+// ---- WebSocket Server ----
+const wss = new WebSocketServer({ port: 8080 });
+console.log("WebSocket server running on ws://localhost:8080");
+
+// Send to **all connected clients**
+function broadcast(msg) {
+  wss.clients.forEach(client => {
+    if (client.readyState === 1) client.send(msg);
+  });
+}
+
+// Listen for Arduino data
 parser.on('data', (data) => {
-  console.log('Arduino says:', data);
+  console.log("Arduino says:", data);
+  broadcast(data);
 });
 
-// Send data TO Arduino every 2 seconds
+// Optional: send message to Arduino every 2 seconds
 setInterval(() => {
   port.write("Hello Arduino\n");
 }, 2000);
 
-console.log("Node.js is running and connected to Arduino...");
+console.log("Node.js server running...");
