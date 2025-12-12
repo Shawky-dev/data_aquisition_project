@@ -15,14 +15,16 @@ services:
     container_name: node-server
     restart: unless-stopped
     ports:
-      - "3000:3000"    # If your API uses this
-      - "8080:8080"    # WebSocket port
+      - "3000:3000"
+      - "8080:8080"
     volumes:
       - ./server:/app
     devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"   # <-- REQUIRED for Arduino access
+      - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       MONGO_URL: mongodb://mongo:27017
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "100"
     depends_on:
       - mongo
 
@@ -33,10 +35,13 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/app           # mount your source
+      - ./frontend:/app
     environment:
       VITE_BACKEND_URL: http://localhost:3000
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "100"
     command: ["npm", "run", "dev", "--", "--host"]
+
 
 
 volumes:

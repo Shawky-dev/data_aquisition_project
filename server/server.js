@@ -42,7 +42,8 @@ parser.on('data', (data) => {
 
 // Optional: send message to Arduino every 2 seconds
 setInterval(() => {
-  port.write("Hello Arduino\n");
+  const timestamp = new Date().toISOString();
+  port.write(`Hello Arduino - ${timestamp}\n`);
 }, 2000);
 
 console.log("Node.js server running...");
