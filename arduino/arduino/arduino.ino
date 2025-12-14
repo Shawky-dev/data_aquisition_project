@@ -1,16 +1,47 @@
+const int pirPin = 5;   // PIR sensor output pin
+const int ledPina = 9;   // LED pin
+const int ledPinb = 10;
+
+const int trigPin = 7;
+const int echoPin = 6;
+
 void setup() {
-  Serial.begin(9600);   // Match this in Node.js
+  pinMode(pirPin, INPUT);
+  pinMode(ledPina, OUTPUT);
+  pinMode(ledPinb, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
-  // Send data to Node.js
-  Serial.println("Hello from Arduino");
-  delay(1000);
+  int val = digitalRead(pirPin);
 
-  // Receive data from Node.js
-  if (Serial.available() > 0) {
-    String msg = Serial.readStringUntil('\n');
-    Serial.print("Received: ");
-    Serial.println(msg);
+  if (val == HIGH) {
+    digitalWrite(ledPinb, LOW);
+    digitalWrite(ledPina, HIGH);
+    Serial.println("Motion detected!");
+
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+
+    long duration = pulseIn(echoPin, HIGH);
+
+    long distance = duration * 0.034 / 2; // convert to cm  
+
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+
+
+
+  } else {
+    digitalWrite(ledPina, LOW);
+    digitalWrite(ledPinb, HIGH);
+    Serial.println("No motion.");
   }
+
+  delay(100);
 }

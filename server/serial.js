@@ -2,7 +2,7 @@ import { SerialPort, ReadlineParser } from "serialport";
 import { broadcast } from "./wsServer.js";
 
 const port = new SerialPort({
-  path: "/dev/ttyACM0",
+  path: "/dev/ttyACM1",
   baudRate: 9600,
 });
 
@@ -15,11 +15,11 @@ parser.on("data", (data) => {
   broadcast(msg);
 });
 
-// Optional: send message to Arduino every 2 seconds
-setInterval(() => {
-  const timestamp = new Date().toLocaleString();
-  port.write(`Hello Arduino - ${timestamp}\n`);
-}, 2000);
+// // Optional: send message to Arduino every 2 seconds
+// setInterval(() => {
+//   const timestamp = new Date().toLocaleString();
+//   port.write(`Hello Arduino - ${timestamp}\n`);
+// }, 2000);
 
 console.log("Arduino serial running...");
 

@@ -20,7 +20,7 @@ services:
     volumes:
       - ./server:/app
     devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
+      - "/dev/ttyACM1:/dev/ttyACM1"
     environment:
       MONGO_URL: mongodb://mongo:27017
       CHOKIDAR_USEPOLLING: "true"
