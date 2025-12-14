@@ -17,13 +17,18 @@ export default function Live() {
     const ws = new WebSocket("ws://localhost:8080")
 
     ws.onmessage = (event) => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: event.data,
-          time: new Date().toLocaleTimeString(),
-        },
-      ])
+      try {
+        const record = JSON.parse(event.data)
+        setMessages((prev) => [
+          ...prev,
+          {
+            distance: record.distance,
+            time: new Date(record.timestamp).toLocaleTimeString(),
+          },
+        ])
+      } catch (e) {
+        console.error("Failed to parse message:", e)
+      }
     }
 
     return () => ws.close()
@@ -55,7 +60,7 @@ export default function Live() {
               className="space-y-1"
             >
               <p className="text-xs text-muted-foreground">{msg.time}</p>
-              <p className="text-sm">{msg.text}</p>
+              <p className="text-sm">Motion Detected!: {msg.distance} cm</p>
               {index < messages.length - 1 && (
                 <Separator className="my-2" />
               )}

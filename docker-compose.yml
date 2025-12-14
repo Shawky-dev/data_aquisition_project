@@ -20,9 +20,10 @@ services:
     volumes:
       - ./server:/app
     devices:
-      - "/dev/ttyACM1:/dev/ttyACM1"
+      - "${SERIAL_PORT}:${SERIAL_PORT}"
     environment:
       MONGO_URL: mongodb://mongo:27017
+      SERIAL_PORT: ${SERIAL_PORT}
       CHOKIDAR_USEPOLLING: "true"
       CHOKIDAR_INTERVAL: "100"
     depends_on:
@@ -37,7 +38,7 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      VITE_BACKEND_URL: http://localhost:3000
+      VITE_API_URL: http://localhost:3000
       CHOKIDAR_USEPOLLING: "true"
       CHOKIDAR_INTERVAL: "100"
     command: ["npm", "run", "dev", "--", "--host"]
